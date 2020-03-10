@@ -7,10 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.appupdate.testing.FakeAppUpdateManager
 import com.google.android.play.core.install.model.ActivityResult.RESULT_IN_APP_UPDATE_FAILED
 import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.install.model.UpdateAvailability.UPDATE_AVAILABLE
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,10 +21,28 @@ class MainActivity : AppCompatActivity() {
         AppUpdateManagerFactory.create(this)
     }
 
+    private val fakeAppUpdateManager: FakeAppUpdateManager by lazy {
+        FakeAppUpdateManager(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         checkIfUpdateAvailable()
+
+        setClickListener()
+    }
+
+    private fun setClickListener() {
+        start_update_flow.setOnClickListener {
+            startUpdateFlow()
+        }
+    }
+
+    private fun startUpdateFlow() {
+        fakeAppUpdateManager.setUpdateAvailable(2)
+        fakeAppUpdateManager.userAcceptsUpdate()
+        fakeAppUpdateManager.downloadStarts()
     }
 
     private fun checkIfUpdateAvailable() {
