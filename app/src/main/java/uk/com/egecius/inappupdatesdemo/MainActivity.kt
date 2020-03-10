@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun requestUpdate(appUpdateInfo: AppUpdateInfo) {
+        Log.d("Eg:MainActivity:73", "requestUpdate()")
         appUpdateManager.startUpdateFlowForResult(
             // Pass the intent that is returned by 'getAppUpdateInfo()'.
             appUpdateInfo,
@@ -84,6 +85,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Log.v("Eg:MainActivity:88", "onActivityResult()")
+
         if (requestCode == MY_REQUEST_CODE) {
             when (requestCode) {
                 RESULT_OK -> Log.v("Eg:MainActivity:58", "onActivityResult(): result successful")
