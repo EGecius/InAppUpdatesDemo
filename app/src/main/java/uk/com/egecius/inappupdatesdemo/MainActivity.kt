@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.appupdate.testing.FakeAppUpdateManager
 import com.google.android.play.core.install.model.ActivityResult.RESULT_IN_APP_UPDATE_FAILED
 import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
@@ -15,41 +16,20 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    /** This is useful only for integration tests - it won't show any UI */
-    private val fakeAppUpdateManager: FakeAppUpdateManager by lazy {
-        FakeAppUpdateManager(this)
-    }
-
-    // Creates instance of the manager.
     private val appUpdateManager: AppUpdateManager by lazy {
-        fakeAppUpdateManager
-        // to use real manager use the line below:
-        // AppUpdateManagerFactory.create(this)
+         AppUpdateManagerFactory.create(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        enableFakeUpdate()
         setClickListeners()
-    }
-
-    private fun enableFakeUpdate() {
-        fakeAppUpdateManager.setUpdateAvailable(1)
     }
 
     private fun setClickListeners() {
         check_for_update.setOnClickListener {
             checkIfUpdateAvailable()
         }
-        start_update_flow.setOnClickListener {
-            startUpdateFlow()
-        }
-    }
-
-    private fun startUpdateFlow() {
-        fakeAppUpdateManager.userAcceptsUpdate()
-        fakeAppUpdateManager.downloadStarts()
     }
 
     private fun checkIfUpdateAvailable() {
