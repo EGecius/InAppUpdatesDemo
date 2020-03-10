@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.ActivityResult.RESULT_IN_APP_UPDATE_FAILED
 import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
 import com.google.android.play.core.install.model.UpdateAvailability.UPDATE_AVAILABLE
 
@@ -54,17 +55,21 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == MY_REQUEST_CODE) {
-            if (resultCode != RESULT_OK) {
-                Log.v("Eg:MainActivity:60", "onActivityResult() Update flow failed! Result code: $resultCode")
-                // If the update is cancelled or fails,
-                // you can request to start the update again.
+            when (requestCode) {
+                RESULT_OK -> Log.v("Eg:MainActivity:58", "onActivityResult(): result successful")
+                RESULT_CANCELED -> Log.v(
+                    "Eg:MainActivity:59",
+                    "onActivityResult(): the user has denied or cancelled the update"
+                )
+                RESULT_IN_APP_UPDATE_FAILED -> Log.v(
+                    "Eg:MainActivity:60",
+                    "onActivityResult(): Some other error prevented either the user from providing consent or the update to proceed."
+                )
             }
         }
     }
 
     companion object {
-
-    	const val MY_REQUEST_CODE = 813132
-
+        const val MY_REQUEST_CODE = 813132
     }
 }
