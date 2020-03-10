@@ -8,6 +8,13 @@
     tools:ignore="HardcodedText">
 
     <Button
+        android:text="Check if update is available"
+        android:id="@+id/check_for_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <Button
         android:text="Start update flow"
         android:id="@+id/start_update_flow"
         android:layout_width="wrap_content"

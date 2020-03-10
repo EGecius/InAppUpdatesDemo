@@ -28,19 +28,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        checkIfUpdateAvailable()
-
-        setClickListener()
+        enableFakeUpdate()
+        setClickListeners()
     }
 
-    private fun setClickListener() {
+    private fun enableFakeUpdate() {
+        fakeAppUpdateManager.setUpdateAvailable(2)
+    }
+
+    private fun setClickListeners() {
+        check_for_update.setOnClickListener {
+            checkIfUpdateAvailable()
+        }
         start_update_flow.setOnClickListener {
             startUpdateFlow()
         }
     }
 
     private fun startUpdateFlow() {
-        fakeAppUpdateManager.setUpdateAvailable(2)
         fakeAppUpdateManager.userAcceptsUpdate()
         fakeAppUpdateManager.downloadStarts()
     }
