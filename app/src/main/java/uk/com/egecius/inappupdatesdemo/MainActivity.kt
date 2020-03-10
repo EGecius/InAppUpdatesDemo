@@ -56,10 +56,9 @@ class MainActivity : AppCompatActivity() {
 
         // Checks that the platform will allow the specified type of update.
         appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-            if (appUpdateInfo.updateAvailability() == UPDATE_AVAILABLE
-                // For a flexible update, use AppUpdateType.FLEXIBLE
-                && appUpdateInfo.isUpdateTypeAllowed(IMMEDIATE)
-            ) {
+            val isUpdateAvailable = appUpdateInfo.updateAvailability() == UPDATE_AVAILABLE
+            val isUpdateTypeImmediate = appUpdateInfo.isUpdateTypeAllowed(IMMEDIATE)
+            if (isUpdateAvailable && isUpdateTypeImmediate) {
                 requestUpdate(appUpdateInfo)
             }
         }
