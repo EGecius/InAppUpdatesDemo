@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    /** This is useful only for integration tests - it won't show any UI */
     private val fakeAppUpdateManager: FakeAppUpdateManager by lazy {
         FakeAppUpdateManager(this)
     }
